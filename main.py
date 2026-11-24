@@ -11,6 +11,10 @@ LINE = "I finished it on time in a parallel branch \u2014 unfortunately, this is
 
 def main() -> None:
     text = LINE.strip()
+    # The gate counts the entry text itself: one line, 1-160 characters,
+    # not only whitespace. Count the line without its trailing newline,
+    # and reject any embedded newline so the file can never hold two lines.
+    assert "\n" not in text and "\r" not in text, "line must be a single line"
     assert 1 <= len(text) <= 160, f"line must be 1-160 chars, got {len(text)}"
     assert text.strip(), "line must not be only whitespace"
     os.makedirs("/output", exist_ok=True)
